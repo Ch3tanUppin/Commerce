@@ -1,3 +1,7 @@
+Instructions
+Clone the repository and run the main file CommerceApplication.java
+Use PostMan tool to test and access the endpoints
+
 Features
 Product Management: Create, read, update, and delete (CRUD) operations for product listings.
 User Management: Secure user authentication and authorization using JWT.
