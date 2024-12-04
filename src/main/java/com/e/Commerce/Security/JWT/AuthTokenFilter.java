@@ -18,7 +18,14 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+/*
+ * this class filters incoming req to check for a valid JWT in the header, 
+ * setting the authication context if the token is valid
+ * Extracts JWT from req header, validates it, 
+ * and configures the spring security context with user details if the token is valid
+ * 
+ * this is a custom filter method
+ */
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired

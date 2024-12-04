@@ -28,14 +28,10 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
-
-  /*  @GetMapping("/echo")
-    public ResponseEntity<String> echoMessage(@RequestParam(name = "message") String message) {
-        return new ResponseEntity<>("Echoed message: " + message, HttpStatus.OK);
-    }*/
-    
+   
 
     //Rest Api End point
+    //getting the category
     @GetMapping("/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
         @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -47,19 +43,21 @@ public class CategoryController {
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK); 
     }
 
-    //API creating data
+    //creating the category
     @PostMapping("/public/categories")
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO); 
         return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
     
+    //deleting category
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO>deleteCategory(@PathVariable Long categoryId) {
         CategoryDTO deletedCategory = categoryService.deleteCategory(categoryId);
         return new ResponseEntity<>(deletedCategory, HttpStatus.OK);
     }
 
+    //updating category
     @PutMapping("/public/categories/{categoryId}")
     public  ResponseEntity<CategoryDTO> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable Long categoryId){
         CategoryDTO savedCategoryDTO = categoryService.updateCategory(categoryDTO, categoryId);

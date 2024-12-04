@@ -57,6 +57,7 @@ public class AuthController {
     @Autowired
     PasswordEncoder encoder;
 
+    //login code 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication;
@@ -87,6 +88,7 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body(response);
     }
 
+    //signing up new into to the system 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepo.existsByUserName(signUpRequest.getUsername())) {
@@ -97,11 +99,12 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
+        // create new users
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
+        //setting up role to new user
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
@@ -110,6 +113,7 @@ public class AuthController {
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
+            //based on the user, roles are setting up
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
@@ -138,6 +142,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    //getting the user by username
     @GetMapping("/username")
     public String currentuserName(Authentication authentication) {
         if (authentication != null)
@@ -146,6 +151,7 @@ public class AuthController {
             return "";
     }
 
+    //getting the user by details
     @GetMapping("/user")
     public ResponseEntity<?> getUserDetails(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -159,6 +165,7 @@ public class AuthController {
         return ResponseEntity.ok().body(response);
     }
 
+    //logout 
     @PostMapping("/signout")
     public ResponseEntity<?> signoutUser(){
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();

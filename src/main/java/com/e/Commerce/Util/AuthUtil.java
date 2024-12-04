@@ -15,6 +15,12 @@ public class AuthUtil {
     @Autowired
     UserRepo userRepo;
 
+    /*
+     * this method to get logged in email id and user Id of user, 
+     * Authentication object get who is currently authenticated,
+     * making use of user repo to get user object and returning user email id and user id
+     * or else throwing an message 
+     */
     public String loggedInEmail(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepo.findByUserName(authentication.getName())

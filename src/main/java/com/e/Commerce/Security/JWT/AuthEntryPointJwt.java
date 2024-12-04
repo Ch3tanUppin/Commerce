@@ -14,6 +14,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+/*
+ * this class provides customm handling for unauthorized req,
+ * typically when authentication is required but not supplied or vaild.
+ * when an unauthorized req is detected, it logs the error ans returns a JSON response
+ * with an error message, status code, and the path attempted.
+ */
 
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {

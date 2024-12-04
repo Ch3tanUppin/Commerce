@@ -11,6 +11,8 @@ import com.e.Commerce.Repo.UserRepo;
 
 import jakarta.transaction.Transactional;
 
+//Custom UserDetailService
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -21,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUserName(username).orElseThrow(() -> new
-        UsernameNotFoundException("UserNot Found"));
+        UsernameNotFoundException("User Not Found"));
         
         return UserDetailsImpl.build(user);
     }
